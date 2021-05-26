@@ -10,27 +10,27 @@ interface formFields {
   password: string;
 }
 class NormalLoginForm extends Component {
-    state = {
-      isLogin: false
-    }
-    onFinish = (values:formFields) => {
-      request.post('/api/login', qs.stringify({
-        password: values.password
-      }), {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded" 
-        }
-      }).then((res) => {
-        const data = res.data;
-        if(data) {
-          this.setState({
-            isLogin: true
-          });
-          message.success("登录成功！");
-        } else {
-          message.error("密码错误！");
-        }
-      })
+  state = {
+    isLogin: false
+  }
+  onFinish = (values:formFields) => {
+    request.post('/api/login', qs.stringify({
+      password: values.password
+    }), {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded" 
+      }
+    }).then((res) => {
+      const data: responseResult.login = res.data;
+      if(data) {
+        this.setState({
+          isLogin: true
+        });
+        message.success("登录成功！");
+      } else {
+        message.error("密码错误！");
+      }
+    })
   };
   render() {
     const { isLogin } = this.state;
@@ -66,7 +66,7 @@ class NormalLoginForm extends Component {
           </Form.Item>
         </Form>
       </div>
-    );
+    )
   }
 };
 
